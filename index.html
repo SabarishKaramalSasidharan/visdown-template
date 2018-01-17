@@ -24,24 +24,139 @@
 
 #CodeHere
     
+
+    
 ```vis
 data:
   url: data/notes.csv
-transform:
-- calculate: log(datum.money + 1)
-  as: moneyLog
-mark: rect
+
+mark: line
 encoding:
   x:
-    type: nominal
     field: year
-  y:
     type: nominal
-    field: denom
+  y:
+    field: money
+    type: Q
+    scale:
+     type: linear
   color:
-    type: quantitative
-    field: moneyLog
+    field: value
+    type: nominal
+    scale:
+     scheme: category20b
+ 
 ```
+    
+```vis
+data:
+  url: data/notes.csv
+
+mark: circle
+encoding:
+  x:
+    field: year
+    type: nominal
+  y:
+    field: money
+    type: Q
+    scale:
+     type: linear
+  color:
+    field: value
+    type: nominal
+    scale:
+     scheme: category20b
+ 
+```
+ #OR   
+```vis
+data:
+    url: data/notes.csv
+height: 400
+width: 700
+transform:
+- filter: (datum.denom == 500) || (datum.year > 2010)
+mark: line
+encoding:
+    x:
+     field: year
+     type: nominal
+    y:
+     field: money
+     type: Q
+    color:
+     field: denom
+     type: N
+```
+#AND
+```vis
+data:
+    url: data/notes.csv
+height: 400
+width: 700
+transform:
+- filter: (datum.denom == 500) && (datum.year > 2010)
+mark: line
+encoding:
+    x:
+     field: year
+     type: nominal
+    y:
+     field: money
+     type: Q
+    color:
+     field: denom
+     type: N
+```
+ 
+
+#CALCULATE
+   
+```vis
+width: 600
+data:
+   url: data/notes.csv
+transform:
+   - filter: (datum.denom == 500)
+   - bin: true
+     field: year
+     as: yearBin
+mark: bar
+encoding:
+   x:
+    field: yearBin
+    type: N
+   y:
+    field: money
+    type: Q
+   color:
+    field: denom
+    type: N
+```
+
+   
+    #AGGREGATE
+```vis
+height: 400
+width: 700
+data:
+    url: data/notes.csv
+transform:
+- filter: datum.money > 0
+mark: point
+encoding:
+    x:
+     field: year
+     type: nominal
+    y:
+     field: money
+     aggregate: count
+     type: Q
+     scale:
+      type: log
+```
+    
 
 </div>
 <div id="visdown-output"></div>
