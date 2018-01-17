@@ -25,30 +25,19 @@
 # Point Plot
 ```vis
 data:
- url: data\notes.csv
-vconcat:
-- mark: bar
-  encoding:
-   x:
-    field: money
-    type: Q
-    bin: true
-   y:
-    aggregate: denom
-    type: Q
-- mark: circle
-  encoding:
-   x:
-    field: value
-    type: Q
-    bin: true
-   y:
-    aggregate: year
-    type: Q
-   color:
-    value: black
+ url: data\cars.csv
+mark: bar
+encoding:
+ y:
+  field: brand
+  type: nominal
+  sort: 
+   op: count
+ x:
+  aggregate: mean
+  field: bhp
+  type: Q
   
-
 ```
 
 </div>
