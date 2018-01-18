@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Visdown - Markdown for Visualisation</title>
+  <title>Saloni</title>
   <meta name="description" content="Create Simple Visualisation Charts with Markdown">
 
   <script src="lib/vega.min.js"></script>
@@ -22,141 +22,173 @@
 
 <div id="visdown-input">
 
-#CodeHere
-    
-
+#Money
+# Re.1 vs Rs.500
     
 ```vis
+width: 900
+height: 600
+data:
+ url: data/notes.csv
+transform:
+- filter: (datum.denom == 1) || (datum.denom == 500)
+mark: bar
+encoding:
+ x:
+  field: year
+  type: N
+ y:
+  field: number
+  type: Q
+  stack: center
+ color:
+  type: N
+  field: denom    
+```
+  
+# Re.1 vs Rs.1000
+
+```vis
+width: 900
+height: 600
+data:
+ url: data/notes.csv
+transform:
+- filter: (datum.denom == 1) || (datum.denom == 1000)
+mark: bar
+encoding:
+ x:
+  field: year
+  type: N
+ y:
+  field: number
+  type: Q
+  stack: center
+ color:
+  type: N
+  field: denom   
+```
+    
+# Re.1 vs Rs.500 vs Rs.1000
+
+```vis
+width: 900
+height: 600
+data:
+ url: data/notes.csv
+transform:
+- filter: (datum.denom == 1) || (datum.denom == 500) || (datum.denom == 1000)
+mark: bar 
+encoding:
+ x:
+  field: year
+  type: N
+ y:
+  field: number
+  type: Q
+  stack: center
+ color:
+  type: N
+  field: denom   
+```
+    
+# Notes of Each Denomination Over Time
+
+```vis
+width: 800
+height: 400
 data:
   url: data/notes.csv
 
-mark: line
-encoding:
-  x:
-    field: year
-    type: nominal
-  y:
-    field: money
-    type: Q
-    scale:
-     type: linear
-  color:
-    field: value
-    type: nominal
-    scale:
-     scheme: category20b
- 
+layer:
+- mark: line
+  size: 4
+  encoding:
+    x:
+      field: year
+      type: quantitative
+      bin:
+        maxbins: 38
+
+    y:
+      field: number
+      type: quantitative
+
+
+    color:
+      field: denom
+      type: nominal
+
+    opacity:
+      value: 0.8
+    size:
+      value: 5
+
+
+    size:
+      value: 70
+    color:
+      value: 000000
+
+
 ```
-    
+
+
+
 ```vis
+width: 800
+height: 400
 data:
   url: data/notes.csv
-
-mark: circle
-encoding:
-  x:
-    field: year
-    type: nominal
-  y:
-    field: money
-    type: Q
-    scale:
-     type: linear
-  color:
-    field: value
-    type: nominal
-    scale:
-     scheme: category20b
- 
-```
- #OR   
-```vis
-data:
-    url: data/notes.csv
-height: 400
-width: 700
-transform:
-- filter: (datum.denom == 500) || (datum.year > 2010)
-mark: line
-encoding:
+layer:
+- mark: circle
+  encoding:
     x:
-     field: year
-     type: nominal
-    y:
-     field: money
-     type: Q
-    color:
-     field: denom
-     type: N
-```
-#AND
-```vis
-data:
-    url: data/notes.csv
-height: 400
-width: 700
-transform:
-- filter: (datum.denom == 500) && (datum.year > 2010)
-mark: line
-encoding:
-    x:
-     field: year
-     type: nominal
-    y:
-     field: money
-     type: Q
-    color:
-     field: denom
-     type: N
-```
- 
+      field: year
+      type: temporal
+      scale:
+        type: log
 
-#CALCULATE
-   
+
+    y:
+      field: money
+      type: quantitative
+
+    size:
+      field: value
+
+    color:
+      field: denom
+
+- mark: tick
+  encoding:
+    x:
+     field: denom
+    y:
+     field: year
+     type: temporal
+
+
+
+```
+
 ```vis
 width: 600
 data:
-   url: data/notes.csv
-transform:
-   - filter: (datum.denom == 500)
-   - bin: true
-     field: year
-     as: yearBin
-mark: bar
+  url: data/notes.csv
+mark: line
 encoding:
-   x:
-    field: yearBin
-    type: N
-   y:
-    field: money
-    type: Q
-   color:
+  x:
+    field: year
+    type: nominal
+  y:
+    field: value
+    type: quantitative
+  color:
     field: denom
-    type: N
+
 ```
 
-   
-    #AGGREGATE
-```vis
-height: 400
-width: 700
-data:
-    url: data/notes.csv
-transform:
-- filter: datum.money > 0
-mark: point
-encoding:
-    x:
-     field: year
-     type: nominal
-    y:
-     field: money
-     aggregate: count
-     type: Q
-     scale:
-      type: log
-```
-    
 
 </div>
 <div id="visdown-output"></div>
